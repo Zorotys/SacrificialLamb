@@ -14,9 +14,9 @@ public class PlayerMovement : MonoBehaviour {
     private MovementState movementState;
 
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float sprintSpeed = 7f;
     [SerializeField] private float walkSpeed = 5f;
-    [SerializeField] private float groundDrag = 6f;
     [SerializeField] private Transform orientation;
 
     [SerializeField] private LayerMask groundLayer;
@@ -31,12 +31,12 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Update() {
         HandleInput();
-        HandleDrag();
         HandleSprint();
+        Jump();
     }
 
     private void FixedUpdate() {
-        rb.AddForce(moveDir * speed);
+        rb.velocity = new Vector3(moveDir.x * speed, rb.velocity.y, moveDir.z * speed);
     }
 
     private void HandleInput() {
@@ -80,16 +80,14 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    private bool IsGrounded() {
-        return Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer);
+    private void Jump() {
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) {
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+        }
     }
 
-    private void HandleDrag() {
-        if (IsGrounded()) {
-            rb.drag = groundDrag;
-        } else {
-            rb.drag = 0;
-        }
+    private bool IsGrounded() {
+        return Physics.Raycast(transform.position, Vector3.down, transform.localScale.y + 0.2f, groundLayer);
     }
 
     public bool IsMoving() {

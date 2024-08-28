@@ -6,6 +6,7 @@ public class PlayerCamera : MonoBehaviour {
 
     [SerializeField] private float sensitivity = 100f;
     [SerializeField] private Transform orientation;
+    [SerializeField] private Transform hand;
 
     private float rotX;
     private float rotY;

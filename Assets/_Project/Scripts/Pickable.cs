@@ -1,14 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Pickable : MonoBehaviour, IInteractable {
-    [SerializeField] private string itemName;
+    public PlayerInteraction playerInteraction;
+    public string itemName;
+    public string hoverText;
+    public TextMeshPro hoverTextGameObject;
+    public GameObject[] hoverGameObjectArray;
+
     private const string HAND_LAYER = "Hand";
     private const string DEFAULT_LAYER = "Default";
 
-    public void Interact(PlayerInteraction playerInteraction) {
+    private bool hovered = false;
+
+    public virtual void Interact(PlayerInteraction playerInteraction) {
         SetParent(playerInteraction.GetHandTransform());
+    }
+
+    private void Start() {
+        hoverTextGameObject.text = hoverText + " " + itemName;
+    }
+
+    protected virtual void Update() {
+        if (hovered) {
+            foreach (GameObject go in hoverGameObjectArray) {
+                go.SetActive(true);
+            }
+        } else if (!hovered) {
+            foreach (GameObject go in hoverGameObjectArray) {
+                go.SetActive(false);
+            }
+        }
+
+        if (playerInteraction == null) {
+            return;
+        }
+        if (playerInteraction.GetHoveredPickable() == null) {
+            hovered = false;
+        } else {
+            return;
+        }
     }
 
     public void SetParent(Transform parentTransform) {
@@ -20,6 +53,9 @@ public class Pickable : MonoBehaviour, IInteractable {
         collider.enabled = false;
 
         gameObject.layer = LayerMask.NameToLayer(HAND_LAYER);
+        foreach (Transform child in transform) {
+            child.gameObject.layer = LayerMask.NameToLayer(HAND_LAYER);
+        }
 
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
@@ -32,8 +68,15 @@ public class Pickable : MonoBehaviour, IInteractable {
         collider.enabled = true;
 
         gameObject.layer = LayerMask.NameToLayer(DEFAULT_LAYER);
+        foreach (Transform child in transform) {
+            child.gameObject.layer = LayerMask.NameToLayer(DEFAULT_LAYER);
+        }
 
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
+    }
+
+    public void SetHovered(bool setHovered) {
+        hovered = setHovered;
     }
 }
