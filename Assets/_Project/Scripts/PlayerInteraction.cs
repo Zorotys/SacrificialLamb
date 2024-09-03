@@ -52,8 +52,6 @@ public class PlayerInteraction : MonoBehaviour {
                             currentPickable = pickable;
                             interactable.Interact(this);
                         }
-                    } else {
-                        interactable.Interact(this);
                     }
                 }
             }

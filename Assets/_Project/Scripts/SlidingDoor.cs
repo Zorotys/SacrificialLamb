@@ -5,6 +5,7 @@ using UnityEngine;
 public class SlidingDoor : MonoBehaviour {
 
     private const string DOOR_TRIGGER = "DoorTrigger";
+    [SerializeField] private bool canOpen = false;
 
     private Animator animator;
 
@@ -13,12 +14,19 @@ public class SlidingDoor : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
+        if (!canOpen) {
+            return;
+        }
+
         if (other.gameObject.CompareTag("Player")) {
             animator.SetTrigger(DOOR_TRIGGER);
         }
     }
 
     private void OnTriggerExit(Collider other) {
+        if (!canOpen) {
+            return;
+        }
         if (other.gameObject.CompareTag("Player")) {
             animator.SetTrigger(DOOR_TRIGGER);
         }
