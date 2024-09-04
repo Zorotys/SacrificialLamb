@@ -9,7 +9,7 @@ public class Match : Pickable {
     private bool holdingMatch = false;
     public override void Interact(PlayerInteraction playerInteraction) {
         if (!holdingMatch) {
-            SetParent(playerInteraction.GetHandTransform());
+            SetParent(playerInteraction.GetHandTransform(), true);
         }
     }
 

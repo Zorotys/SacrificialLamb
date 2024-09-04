@@ -4,12 +4,13 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Candle : BaseInteractable {
-    private enum CandleState {
+    public enum CandleState {
         Unlit,
         Lit
     }
     private CandleState candleState = CandleState.Unlit;
 
+    [SerializeField] private Candles candles;
     [SerializeField] private Pickable pickableNeeded;
     [SerializeField] private GameObject fireParticles;
     [SerializeField] private bool isLit = false;
@@ -52,6 +53,7 @@ public class Candle : BaseInteractable {
     }
 
     public void LightCandle() {
+        candles.AddCandle();
         isLit = true;
     }
 
@@ -66,5 +68,9 @@ public class Candle : BaseInteractable {
                 LightCandle();
             }
         }
+    }
+
+    public CandleState GetCandleState() {
+        return candleState;
     }
 }

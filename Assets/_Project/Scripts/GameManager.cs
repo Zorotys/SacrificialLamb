@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class GameManager : MonoBehaviour {
+
+    public enum Phase {
+        Candles,
+        Items,
+        Ceremony
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public static GameManager Instance;
+
+    public Phase currentPhase = Phase.Candles;
+
+    private void Start() {
+        currentPhase = Phase.Candles;
+    }
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
     }
 }

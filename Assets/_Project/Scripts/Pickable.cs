@@ -16,7 +16,7 @@ public class Pickable : MonoBehaviour, IInteractable {
     private bool hovered = false;
 
     public virtual void Interact(PlayerInteraction playerInteraction) {
-        SetParent(playerInteraction.GetHandTransform());
+        SetParent(playerInteraction.GetHandTransform(), true);
     }
 
     private void Start() {
@@ -44,7 +44,7 @@ public class Pickable : MonoBehaviour, IInteractable {
         }
     }
 
-    public void SetParent(Transform parentTransform) {
+    public void SetParent(Transform parentTransform, bool changeLayer) {
         transform.SetParent(parentTransform);
         transform.position = parentTransform.position;
         transform.rotation = parentTransform.rotation;
@@ -52,9 +52,16 @@ public class Pickable : MonoBehaviour, IInteractable {
         Collider collider = GetComponent<Collider>();
         collider.enabled = false;
 
-        gameObject.layer = LayerMask.NameToLayer(HAND_LAYER);
-        foreach (Transform child in transform) {
-            child.gameObject.layer = LayerMask.NameToLayer(HAND_LAYER);
+        if (changeLayer == true) {
+            gameObject.layer = LayerMask.NameToLayer(HAND_LAYER);
+            foreach (Transform child in transform) {
+                child.gameObject.layer = LayerMask.NameToLayer(HAND_LAYER);
+            }
+        } else {
+            gameObject.layer = LayerMask.NameToLayer(DEFAULT_LAYER);
+            foreach (Transform child in transform) {
+                child.gameObject.layer = LayerMask.NameToLayer(DEFAULT_LAYER);
+            }
         }
 
         Rigidbody rb = GetComponent<Rigidbody>();
