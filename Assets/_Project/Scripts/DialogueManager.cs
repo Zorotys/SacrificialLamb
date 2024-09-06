@@ -70,4 +70,8 @@ public class DialogueManager : MonoBehaviour {
     public bool GetIsDialogueActive() {
         return isDialogueActive;
     }
+
+    public Queue<DialogueLine> GetLines() {
+        return lines;
+    }
 }

@@ -1,23 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour {
+    public static SceneTransition instance;
 
     [SerializeField] private Animator animator;
 
-    const string FADE_IN = "FadeIn";
-    const string FADE_OUT = "FadeOut";
+    const string TRIGGER_TRANSITION = "TriggerTransition";
 
-    private void Start() {
-        animator.SetTrigger(FADE_OUT);
+    public void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+        }
     }
 
-    public void FadeIn() {
-        animator.SetTrigger(FADE_IN);
+    public void StartTransition(int scene) {
+        StartCoroutine(ChangeScene(scene));
     }
 
-    public void FadeOut() {
-        animator.SetTrigger(FADE_OUT);
+    public IEnumerator ChangeScene(int scene) {
+        animator.SetTrigger(TRIGGER_TRANSITION);
+        SceneManager.LoadSceneAsync(scene);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(scene);
     }
 }

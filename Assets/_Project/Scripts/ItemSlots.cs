@@ -26,7 +26,7 @@ public class ItemSlots : MonoBehaviour {
         }
 
         foreach (ItemSlot itemSlot in itemSlotArray) {
-            if (itemSlotsFilled == itemSlotArray.Length) {
+            if (itemSlotsFilled == itemSlotArray.Length && GameManager.Instance.GetPlayerInteraction().GetCurrentPickable() is RitualDagger) {
                 GameManager.Instance.currentPhase = GameManager.Phase.Ceremony;
                 hasAllItems = true;
             }

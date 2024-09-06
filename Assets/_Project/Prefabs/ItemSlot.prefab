@@ -241,6 +241,7 @@ MonoBehaviour:
   hoverGameObjectArray:
   - {fileID: 4671672205491177857}
   - {fileID: 5482135078888466793}
+  itemSlots: {fileID: 0}
   neededPickable: {fileID: 0}
   visualGameObjectArray:
   - {fileID: 0}

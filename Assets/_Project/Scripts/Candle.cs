@@ -53,7 +53,9 @@ public class Candle : BaseInteractable {
     }
 
     public void LightCandle() {
-        candles.AddCandle();
+        if (candles != null) {
+            candles.AddCandle();
+        }
         isLit = true;
     }
 

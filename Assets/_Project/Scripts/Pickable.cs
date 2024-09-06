@@ -86,4 +86,8 @@ public class Pickable : MonoBehaviour, IInteractable {
     public void SetHovered(bool setHovered) {
         hovered = setHovered;
     }
+
+    public void DestroyPickable() {
+        Destroy(gameObject);
+    }
 }

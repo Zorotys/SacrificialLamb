@@ -10,6 +10,11 @@ public class ItemSlot : BaseInteractable {
     private bool hasItem = false;
     public override void Interact(PlayerInteraction playerInteraction) {
         if (playerInteraction.GetCurrentPickable() == neededPickable) {
+            if (playerInteraction.GetCurrentPickable() is RollOfRobePickable) {
+                RollOfRobePickable rollOfRobePickable = playerInteraction.GetCurrentPickable() as RollOfRobePickable;
+                rollOfRobePickable.OpenRobe();
+            }
+
             playerInteraction.GetCurrentPickable().SetParent(transform, false);
             playerInteraction.SetCurrentPickable(null);
             itemSlots.AddItemSlot();
