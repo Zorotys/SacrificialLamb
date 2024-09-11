@@ -24,7 +24,6 @@ public class SceneTransition : MonoBehaviour {
 
     public IEnumerator ChangeScene(int scene) {
         animator.SetTrigger(TRIGGER_TRANSITION);
-        SceneManager.LoadSceneAsync(scene);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(scene);
     }

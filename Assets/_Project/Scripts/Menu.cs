@@ -21,6 +21,7 @@ public class Menu : MonoBehaviour {
         }
     }
 
+
     public void Resume() {
         gameState.currentState = GameState.State.Playing;
         Cursor.lockState = CursorLockMode.Locked;
@@ -28,6 +29,13 @@ public class Menu : MonoBehaviour {
         pauseMenu.SetActive(false);
     }
 
+    public void ExitToMenu() {
+        SceneTransition.instance.StartTransition(0);
+    }
+
+    public void ExitToDesktop() {
+        Application.Quit();
+    }
     public void Pause() {
         gameState.currentState = GameState.State.Paused;
         Cursor.lockState = CursorLockMode.None;

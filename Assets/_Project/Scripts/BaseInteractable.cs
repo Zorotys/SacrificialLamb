@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using DG.Tweening;
 using UnityEngine;
 
 public class BaseInteractable : MonoBehaviour, IInteractable {

@@ -19,4 +19,8 @@ public class Buttons : MonoBehaviour {
         creditsGO.SetActive(false);
     }
 
+    public void ExitToDesktop() {
+        Application.Quit();
+    }
+
 }
