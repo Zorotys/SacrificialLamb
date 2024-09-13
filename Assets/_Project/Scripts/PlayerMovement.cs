@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-
+    public static PlayerMovement Instance;
     private enum MovementState {
         Idle,
         Walking,
@@ -25,6 +25,13 @@ public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody rb;
 
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+    }
     private void Start() {
         rb = GetComponent<Rigidbody>();
     }

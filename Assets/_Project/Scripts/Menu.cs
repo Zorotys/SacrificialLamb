@@ -23,7 +23,6 @@ public class Menu : MonoBehaviour {
 
 
     public void Resume() {
-        gameState.currentState = GameState.State.Playing;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenu.SetActive(false);
@@ -37,7 +36,6 @@ public class Menu : MonoBehaviour {
         Application.Quit();
     }
     public void Pause() {
-        gameState.currentState = GameState.State.Paused;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pauseMenu.SetActive(true);

@@ -30,12 +30,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public PlayerInteraction GetPlayerInteraction() {
-        return playerInteraction;
+    private void Start() {
+        lamb.OnLambDeath += Lamb_OnLambDeath;
     }
 
-    private void Update() {
-        lamb.OnLambDeath += Lamb_OnLambDeath;
+    public PlayerInteraction GetPlayerInteraction() {
+        return playerInteraction;
     }
 
     private void Lamb_OnLambDeath(object sender, System.EventArgs e) {

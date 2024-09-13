@@ -5,8 +5,12 @@ using TMPro;
 using UnityEngine;
 
 public class Lamb : BaseInteractable {
+    public static Lamb Instance;
+
     public event EventHandler OnLambDeath;
     public event EventHandler OnOpenItemList;
+    public event EventHandler OnLambDialogue;
+    public event EventHandler OnEvilLambSpawn;
 
     [SerializeField] private DialogueTrigger dialogueTrigger;
 
@@ -18,9 +22,16 @@ public class Lamb : BaseInteractable {
     [SerializeField] private GameObject evilLamb;
     [SerializeField] private GameObject itemListGO;
 
+    private const string CHARACTER_NAME = "Sheep";
     private GameManager gameManager;
     private bool ceremonyDialogueTriggered = false;
     private bool itemDialogueTriggered = false;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }
+    }
 
     private void Start() {
         gameManager = GameManager.Instance;
@@ -56,6 +67,7 @@ public class Lamb : BaseInteractable {
             Destroy(go, 3f);
 
             Instantiate(evilLamb, transform.position, Quaternion.identity);
+            OnEvilLambSpawn?.Invoke(this, EventArgs.Empty);
 
             Destroy(gameObject);
         }
@@ -70,6 +82,7 @@ public class Lamb : BaseInteractable {
 
         if (!DialogueManager.Instance.GetIsDialogueActive()) {
             dialogueTrigger.TriggerDialogue();
+            OnLambDialogue?.Invoke(this, EventArgs.Empty);
 
             if (gameManager.currentPhase == GameManager.Phase.Ceremony) {
                 ceremonyDialogueTriggered = true;
@@ -78,6 +91,11 @@ public class Lamb : BaseInteractable {
                 itemDialogueTriggered = true;
             }
         } else {
+            if (DialogueManager.Instance.GetLines().Count != 0) {
+                if (DialogueManager.Instance.GetDialogueLine().character.name == CHARACTER_NAME) {
+                    OnLambDialogue?.Invoke(this, EventArgs.Empty);
+                }
+            }
             DialogueManager.Instance.DisplayNextDialogueLine();
         }
 

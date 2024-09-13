@@ -74,4 +74,8 @@ public class DialogueManager : MonoBehaviour {
     public Queue<DialogueLine> GetLines() {
         return lines;
     }
+
+    public DialogueLine GetDialogueLine() {
+        return lines.Peek();
+    }
 }
